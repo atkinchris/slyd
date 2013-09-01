@@ -19,7 +19,7 @@ public class InputManager implements InputProcessor {
 	}
 
 	private void nextColumn() {
-		if (column == 6) {
+		if (column == (slyd.gridSIZE - 1)) {
 			column = 0;
 		} else {
 			column++;
@@ -28,7 +28,7 @@ public class InputManager implements InputProcessor {
 
 	private void prevColumn() {
 		if (column == 0) {
-			column = 6;
+			column = (slyd.gridSIZE - 1);
 		} else {
 			column--;
 		}
