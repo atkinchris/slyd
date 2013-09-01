@@ -80,14 +80,15 @@ public class slyd extends Game {
 
 		batch.setProjectionMatrix(camera.combined);
 		batch.begin();
-		for (int y = 0; y < gridSIZE; y++) {
-			for (int x = 0; x < gridSIZE; x++) {
-				batch.draw(textures[board.grid[x][y]], y * (SIZE + PADDING) + SIZE, x * (SIZE + PADDING) + SIZE, SIZE,
-						SIZE);
+		for (int x = 0; x < gridSIZE; x++) {
+			for (int y = 0; y < gridSIZE; y++) {
+				batch.draw(textures[board.grid[x][y]], (y * SIZE + (PADDING * y)) + PADDING, (x * SIZE + (PADDING * x))
+						+ PADDING, SIZE, SIZE);
 			}
 		}
-		batch.draw(textures[2], inputManager.getSelectedColumn() * (SIZE + PADDING) + SIZE, (gridSIZE + 1)
-				* (SIZE + PADDING), SIZE, SIZE);
+		batch.draw(textures[2],
+				(inputManager.getSelectedColumn() * SIZE + (PADDING * inputManager.getSelectedColumn())) + PADDING,
+				(gridSIZE) * (SIZE + PADDING), SIZE, SIZE);
 
 		if (Arrays.deepEquals(goal.grid, board.grid)) {
 			font.draw(batch, "Hooray", Gdx.graphics.getWidth() / 2, Gdx.graphics.getHeight() / 3);
@@ -97,8 +98,8 @@ public class slyd extends Game {
 
 	@Override
 	public void resize(int width, int height) {
-		SIZE = width / (gridSIZE + 3);
-		PADDING = SIZE / 6;
+		SIZE = width / (gridSIZE + 1);
+		PADDING = SIZE / (gridSIZE + 1);
 	}
 
 	private void setupTextures() {
