@@ -1,6 +1,8 @@
 package uk.co.slyd;
 
-import com.badlogic.gdx.ApplicationListener;
+import java.util.Arrays;
+
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL10;
@@ -8,11 +10,12 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Pixmap.Format;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 
-public class slyd implements ApplicationListener {
+public class slyd extends Game {
 
 	private static final int	VIRTUAL_WIDTH	= 320;
 	private static final int	VIRTUAL_HEIGHT	= 480;
@@ -22,7 +25,11 @@ public class slyd implements ApplicationListener {
 	private Rectangle			viewport;
 	private SpriteBatch			batch;
 	private Texture[]			textures;
+	private InputManager		inputManager;
 	private BoardManager		boardManager;
+	private Board				board;
+	private Board				goal;
+	private BitmapFont			font;
 
 	public static final String	colour1			= "69D2E7";
 	public static final String	colour2			= "A7DBD8";
@@ -39,9 +46,26 @@ public class slyd implements ApplicationListener {
 		camera.setToOrtho(true);
 		batch = new SpriteBatch();
 
-		boardManager = new BoardManager();
+		font = new BitmapFont(Gdx.files.internal("basic.fnt"), true);
+		font.setColor(Color.BLACK);
+		font.setScale(4);
 
-		textures = new Texture[2];
+		boardManager = new BoardManager();
+		board = boardManager.getBoard("1");
+		goal = new Board();
+
+		for (int y = 0; y < 7; y++) {
+			for (int x = 0; x < 7; x++) {
+				goal.grid[x][y] = board.grid[x][y];
+			}
+		}
+
+		board.shuffle(6);
+
+		inputManager = new InputManager(board);
+		Gdx.input.setInputProcessor(inputManager);
+
+		textures = new Texture[3];
 
 		Pixmap pixmap = new Pixmap(1, 1, Format.RGBA8888);
 
@@ -52,6 +76,10 @@ public class slyd implements ApplicationListener {
 		pixmap.setColor(Color.valueOf(colour2));
 		pixmap.fill();
 		textures[1] = new Texture(pixmap);
+
+		pixmap.setColor(Color.valueOf(colour4));
+		pixmap.fill();
+		textures[2] = new Texture(pixmap);
 
 		pixmap.dispose();
 	}
@@ -72,15 +100,16 @@ public class slyd implements ApplicationListener {
 
 		batch.setProjectionMatrix(camera.combined);
 		batch.begin();
-
-		Board board = boardManager.getBoard("1");
-
 		for (int y = 0; y < 7; y++) {
 			for (int x = 0; x < 7; x++) {
 				batch.draw(textures[board.grid[x][y]], y * (SIZE + PADDING), x * (SIZE + PADDING), SIZE, SIZE);
 			}
 		}
+		batch.draw(textures[2], inputManager.getSelectedColumn() * (SIZE + PADDING), 0, SIZE, SIZE);
 
+		if (Arrays.equals(goal.grid, board.grid)) {
+			font.draw(batch, "Hooray", Gdx.graphics.getWidth() / 2, Gdx.graphics.getHeight() / 3);
+		}
 		batch.end();
 	}
 
@@ -112,4 +141,5 @@ public class slyd implements ApplicationListener {
 	@Override
 	public void resume() {
 	}
+
 }
