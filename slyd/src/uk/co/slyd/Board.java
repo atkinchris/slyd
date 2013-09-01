@@ -4,8 +4,8 @@ import java.util.Random;
 
 public class Board {
 
-	public String		ID;
-	public Integer[][]	grid	= new Integer[slyd.gridSIZE][slyd.gridSIZE];
+	public String ID;
+	public Integer[][] grid = new Integer[slyd.gridSIZE][slyd.gridSIZE];
 
 	public void shiftColumn(Integer col, Integer moves, Boolean down) {
 		/*
@@ -14,6 +14,13 @@ public class Board {
 		 */
 		moves = moves % slyd.gridSIZE;
 		if (moves == 0)
+			return;
+
+		Integer sum = 0;
+		for (int i = 0; i < slyd.gridSIZE; i++) {
+			sum += grid[i][col];
+		}
+		if (sum == 0)
 			return;
 
 		if (down) {
