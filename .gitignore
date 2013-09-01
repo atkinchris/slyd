@@ -1,0 +1,18 @@
+bin/
+gen/
+tmp/
+.metadata
+R.java
+
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+.DS_Store
+
+## Include project files
+#.project
+#.classpath
+#.settings/
+#local.properties
+#.loadpath
