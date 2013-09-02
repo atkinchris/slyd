@@ -13,7 +13,6 @@ import com.badlogic.gdx.graphics.Pixmap.Format;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.math.Vector2;
 
 public class slyd extends Game {
 
@@ -28,9 +27,6 @@ public class slyd extends Game {
 	private Board				board;
 	private Board				goal;
 	private BitmapFont			font;
-
-	public Vector2				touchPos;
-	public Vector2				dragPos;
 
 	public static final String	emptyTileColour		= "E0E4CC";
 	public static final String	filledTileColour	= "69D2E7";
