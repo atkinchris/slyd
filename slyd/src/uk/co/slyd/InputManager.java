@@ -68,10 +68,10 @@ public class InputManager implements InputProcessor {
 			board.shiftColumn((int) cell.x, true);
 			cell.y++;
 		} else if (cell.x - toCell(screenX) == 1) {
-			board.shiftRow((int) cell.x, false);
+			board.shiftRow((int) cell.y, false);
 			cell.x--;
 		} else if (cell.x - toCell(screenX) == -1) {
-			board.shiftRow((int) cell.x, true);
+			board.shiftRow((int) cell.y, true);
 			cell.x++;
 		}
 		return false;
