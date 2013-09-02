@@ -13,6 +13,7 @@ import com.badlogic.gdx.graphics.Pixmap.Format;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Vector2;
 
 public class slyd extends Game {
 
@@ -28,12 +29,15 @@ public class slyd extends Game {
 	private Board				goal;
 	private BitmapFont			font;
 
+	public Vector2				touchPos;
+	public Vector2				dragPos;
+
 	public static final String	emptyTileColour		= "E0E4CC";
 	public static final String	filledTileColour	= "69D2E7";
 	public static final String	selectedColColour	= "F38630";
 
 	public static Integer		SIZE;
-	public static Integer		PADDING;
+	public static Integer		PAD;
 	public static final Integer	gridSIZE			= 7;
 
 	@Override
@@ -82,13 +86,10 @@ public class slyd extends Game {
 		batch.begin();
 		for (int x = 0; x < gridSIZE; x++) {
 			for (int y = 0; y < gridSIZE; y++) {
-				batch.draw(textures[board.grid[x][y]], (y * SIZE + (PADDING * y)) + PADDING, (x * SIZE + (PADDING * x))
-						+ PADDING, SIZE, SIZE);
+				batch.draw(textures[board.grid[x][y]], y * (SIZE + PAD) + PAD, x * (SIZE + PAD) + PAD, SIZE, SIZE);
 			}
 		}
-		batch.draw(textures[2],
-				(inputManager.getSelectedColumn() * SIZE + (PADDING * inputManager.getSelectedColumn())) + PADDING,
-				(gridSIZE) * (SIZE + PADDING), SIZE, SIZE);
+		batch.draw(textures[2], inputManager.getColumn() * (SIZE + PAD) + PAD, (gridSIZE) * (SIZE + PAD), SIZE, SIZE);
 
 		if (Arrays.deepEquals(goal.grid, board.grid)) {
 			font.draw(batch, "Hooray", Gdx.graphics.getWidth() / 2, Gdx.graphics.getHeight() / 3);
@@ -99,7 +100,7 @@ public class slyd extends Game {
 	@Override
 	public void resize(int width, int height) {
 		SIZE = width / (gridSIZE + 1);
-		PADDING = SIZE / (gridSIZE + 1);
+		PAD = SIZE / (gridSIZE + 1);
 	}
 
 	private void setupTextures() {

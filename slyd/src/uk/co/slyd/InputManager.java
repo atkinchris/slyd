@@ -8,13 +8,14 @@ public class InputManager implements InputProcessor {
 
 	private final Board	board;
 	private Integer		column;
+	private Boolean		touched	= false;
 
 	public InputManager(Board board) {
 		this.board = board;
 		column = 0;
 	}
 
-	public Integer getSelectedColumn() {
+	public Integer getColumn() {
 		return column;
 	}
 
@@ -40,6 +41,14 @@ public class InputManager implements InputProcessor {
 
 	private void shiftDown() {
 		board.shiftColumn(column, 1, true);
+	}
+
+	public Boolean getTouched() {
+		return touched;
+	}
+
+	public void setTouched(Boolean touched) {
+		this.touched = touched;
 	}
 
 	@Override
@@ -69,30 +78,21 @@ public class InputManager implements InputProcessor {
 
 	@Override
 	public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-		if ((screenX > Gdx.graphics.getWidth() / 2) && (screenY < Gdx.graphics.getHeight() / 2)) {
-			nextColumn();
-		}
-		if ((screenX < Gdx.graphics.getWidth() / 2) && (screenY < Gdx.graphics.getHeight() / 2)) {
-			prevColumn();
-		}
-		if ((screenX > Gdx.graphics.getWidth() / 2) && (screenY > Gdx.graphics.getHeight() / 2)) {
-			shiftUp();
-		}
-		if ((screenX < Gdx.graphics.getWidth() / 2) && (screenY > Gdx.graphics.getHeight() / 2)) {
-			shiftDown();
-		}
+		setTouched(true);
+		Gdx.app.log("touchDown", screenX + "," + screenY);
 		return false;
 	}
 
 	@Override
 	public boolean touchUp(int screenX, int screenY, int pointer, int button) {
-		// TODO Auto-generated method stub
+		setTouched(false);
+		Gdx.app.log("touchUp", screenX + "," + screenY);
 		return false;
 	}
 
 	@Override
 	public boolean touchDragged(int screenX, int screenY, int pointer) {
-		// TODO Auto-generated method stub
+		Gdx.app.log("touchDragged", screenX + "," + screenY);
 		return false;
 	}
 
