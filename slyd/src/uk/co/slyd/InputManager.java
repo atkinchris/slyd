@@ -1,5 +1,6 @@
 package uk.co.slyd;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.math.Vector2;
@@ -7,8 +8,10 @@ import com.badlogic.gdx.math.Vector2;
 public class InputManager implements InputProcessor {
 
 	private final Board		board;
-	private final Vector2	cell	= new Vector2();
-	public Boolean			touched	= false;
+	private final Vector2	cell		= new Vector2();
+	private Boolean			backPressed	= false;
+
+	public Boolean			touched		= false;
 
 	public InputManager(Board board) {
 		this.board = board;
@@ -28,6 +31,14 @@ public class InputManager implements InputProcessor {
 	public boolean keyDown(int keycode) {
 		if (keycode == Keys.R)
 			board.shuffle(board.par);
+
+		// Dirty method till UI is added.
+		if (keycode == Keys.BACK && backPressed)
+			Gdx.app.exit();
+		if (keycode == Keys.BACK) {
+			board.shuffle(board.par);
+			backPressed = true;
+		}
 		return false;
 	}
 
@@ -45,6 +56,9 @@ public class InputManager implements InputProcessor {
 
 	@Override
 	public boolean touchDown(int screenX, int screenY, int pointer, int button) {
+		// Dirty method till UI is added.
+		backPressed = false;
+
 		touched = true;
 		cell.x = toCell(screenX);
 		cell.y = toCell(screenY);

@@ -63,6 +63,7 @@ public class slyd extends Game {
 
 		input = new InputManager(board);
 		Gdx.input.setInputProcessor(input);
+		Gdx.input.setCatchBackKey(true);
 	}
 
 	@Override
