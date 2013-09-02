@@ -8,15 +8,7 @@ public class Board {
 	public Integer		par		= 6;
 	public Integer[][]	grid	= new Integer[slyd.gridSIZE][slyd.gridSIZE];
 
-	public boolean shiftColumn(Integer col, Integer moves, Boolean down) {
-		/*
-		 * MOD the number of moves by the grid size, to return the minimum
-		 * number of moves to make. If 0, there's no moves to make.
-		 */
-		moves = moves % slyd.gridSIZE;
-		if (moves == 0)
-			return false;
-
+	public boolean shiftColumn(Integer col, Boolean down) {
 		if (down) {
 			Integer temp = grid[slyd.gridSIZE - 1][col];
 			for (int i = (slyd.gridSIZE - 1); i > 0; i--) {
@@ -30,9 +22,24 @@ public class Board {
 			}
 			grid[slyd.gridSIZE - 1][col] = temp;
 		}
-
 		return true;
+	}
 
+	public boolean shiftRow(Integer row, Boolean right) {
+		if (right) {
+			Integer temp = grid[row][slyd.gridSIZE - 1];
+			for (int i = (slyd.gridSIZE - 1); i > 0; i--) {
+				grid[row][i] = grid[row][i - 1];
+			}
+			grid[row][0] = temp;
+		} else {
+			Integer temp = grid[row][0];
+			for (int i = 0; i < (slyd.gridSIZE - 1); i++) {
+				grid[row][i] = grid[row][i + 1];
+			}
+			grid[row][slyd.gridSIZE - 1] = temp;
+		}
+		return true;
 	}
 
 	private boolean emptyCol(Integer col) {
@@ -52,7 +59,7 @@ public class Board {
 			while (emptyCol(x)) {
 				x = random.nextInt(slyd.gridSIZE);
 			}
-			shiftColumn(x, 1, true);
+			shiftColumn(x, true);
 		}
 	}
 }

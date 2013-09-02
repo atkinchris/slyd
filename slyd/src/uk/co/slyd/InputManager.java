@@ -7,16 +7,20 @@ import com.badlogic.gdx.math.Vector2;
 public class InputManager implements InputProcessor {
 
 	private final Board		board;
-	private final Vector2	touchPos	= new Vector2();
-	private final Vector2	cell		= new Vector2();
-	private final Vector2	offset		= new Vector2();
-	public Boolean			touched		= false;
+	private final Vector2	cell	= new Vector2();
+	public Boolean			touched	= false;
 
 	public InputManager(Board board) {
 		this.board = board;
 	}
 
 	public Vector2 getCell() {
+		return cell;
+	}
+
+	private Integer toCell(int pos) {
+		/* Takes a screen position in pixels and converts to cell coordinate */
+		int cell = (int) Math.ceil(pos / (slyd.SIZE + slyd.PAD));
 		return cell;
 	}
 
@@ -42,32 +46,34 @@ public class InputManager implements InputProcessor {
 	@Override
 	public boolean touchDown(int screenX, int screenY, int pointer, int button) {
 		touched = true;
-		touchPos.x = screenX;
-		touchPos.y = screenY;
-		cell.x = (float) Math.ceil(screenX / (slyd.SIZE + slyd.PAD));
-		cell.y = (float) Math.ceil(screenY / (slyd.SIZE + slyd.PAD));
+		cell.x = toCell(screenX);
+		cell.y = toCell(screenY);
 		return false;
 	}
 
 	@Override
 	public boolean touchUp(int screenX, int screenY, int pointer, int button) {
 		touched = false;
-		touchPos.x = 0;
-		touchPos.y = 0;
+		cell.x = 0;
+		cell.y = 0;
 		return false;
 	}
 
 	@Override
 	public boolean touchDragged(int screenX, int screenY, int pointer) {
-		offset.x = touchPos.x - screenX;
-		offset.y = touchPos.y - screenY;
-
-		if (offset.y > (slyd.SIZE + slyd.PAD)) {
-			board.shiftColumn((int) cell.x, 1, false);
-		} else if (offset.y < -(slyd.SIZE + slyd.PAD)) {
-			board.shiftColumn((int) cell.x, 1, true);
+		if (cell.y - toCell(screenY) == 1) {
+			board.shiftColumn((int) cell.x, false);
+			cell.y--;
+		} else if (cell.y - toCell(screenY) == -1) {
+			board.shiftColumn((int) cell.x, true);
+			cell.y++;
+		} else if (cell.x - toCell(screenX) == 1) {
+			board.shiftRow((int) cell.x, false);
+			cell.x--;
+		} else if (cell.x - toCell(screenX) == -1) {
+			board.shiftRow((int) cell.x, true);
+			cell.x++;
 		}
-
 		return false;
 	}
 
