@@ -4,24 +4,18 @@ import java.util.Random;
 
 public class Board {
 
-	public String ID;
-	public Integer[][] grid = new Integer[slyd.gridSIZE][slyd.gridSIZE];
+	public String		ID;
+	public Integer		par		= 6;
+	public Integer[][]	grid	= new Integer[slyd.gridSIZE][slyd.gridSIZE];
 
-	public void shiftColumn(Integer col, Integer moves, Boolean down) {
+	public boolean shiftColumn(Integer col, Integer moves, Boolean down) {
 		/*
 		 * MOD the number of moves by the grid size, to return the minimum
 		 * number of moves to make. If 0, there's no moves to make.
 		 */
 		moves = moves % slyd.gridSIZE;
 		if (moves == 0)
-			return;
-
-		Integer sum = 0;
-		for (int i = 0; i < slyd.gridSIZE; i++) {
-			sum += grid[i][col];
-		}
-		if (sum == 0)
-			return;
+			return false;
 
 		if (down) {
 			Integer temp = grid[slyd.gridSIZE - 1][col];
@@ -37,12 +31,28 @@ public class Board {
 			grid[slyd.gridSIZE - 1][col] = temp;
 		}
 
+		return true;
+
+	}
+
+	private boolean emptyCol(Integer col) {
+		Integer sum = 0;
+		for (int i = 0; i < slyd.gridSIZE; i++) {
+			sum += grid[i][col];
+		}
+		if (sum == 0)
+			return true;
+		return false;
 	}
 
 	public void shuffle(Integer number) {
 		Random random = new Random();
 		for (int i = 0; i < number; i++) {
-			shiftColumn(random.nextInt(slyd.gridSIZE), 1, true);
+			int x = random.nextInt(slyd.gridSIZE);
+			while (emptyCol(x)) {
+				x = random.nextInt(slyd.gridSIZE);
+			}
+			shiftColumn(x, 1, true);
 		}
 	}
 }

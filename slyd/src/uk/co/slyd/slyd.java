@@ -22,7 +22,7 @@ public class slyd extends Game {
 	private OrthographicCamera	camera;
 	private SpriteBatch			batch;
 	private Texture[]			textures;
-	private InputManager		inputManager;
+	private InputManager		input;
 	private BoardManager		boardManager;
 	private Board				board;
 	private Board				goal;
@@ -61,8 +61,8 @@ public class slyd extends Game {
 
 		board.shuffle(6);
 
-		inputManager = new InputManager(board);
-		Gdx.input.setInputProcessor(inputManager);
+		input = new InputManager(board);
+		Gdx.input.setInputProcessor(input);
 	}
 
 	@Override
@@ -85,7 +85,9 @@ public class slyd extends Game {
 				batch.draw(textures[board.grid[x][y]], y * (SIZE + PAD) + PAD, x * (SIZE + PAD) + PAD, SIZE, SIZE);
 			}
 		}
-		batch.draw(textures[2], inputManager.getColumn() * (SIZE + PAD) + PAD, (gridSIZE) * (SIZE + PAD), SIZE, SIZE);
+		if (input.touched)
+			batch.draw(textures[2], input.getCell().x * (SIZE + PAD) + PAD, input.getCell().y * (SIZE + PAD) + PAD,
+					SIZE, SIZE);
 
 		if (Arrays.deepEquals(goal.grid, board.grid)) {
 			font.draw(batch, "Hooray", Gdx.graphics.getWidth() / 2, Gdx.graphics.getHeight() / 3);
