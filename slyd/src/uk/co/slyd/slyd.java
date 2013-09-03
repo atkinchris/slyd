@@ -1,74 +1,41 @@
 package uk.co.slyd;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.GL10;
-import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Pixmap.Format;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
-public class slyd extends Game {
+public class Slyd extends Game {
 
-	private static final int	VIRTUAL_WIDTH		= 320;
-	private static final int	VIRTUAL_HEIGHT		= 480;
-
-	private OrthographicCamera	camera;
-	private SpriteBatch			batch;
-	private Texture[]			textures;
-	private InputManager		input;
-	private BoardManager		boardManager;
-	private Board				board;
-	private Board				goal;
-	private BitmapFont			font;
-
-	public static final String	emptyTileColour		= "E0E4CC";
-	public static final String	filledTileColour	= "69D2E7";
-	public static final String	selectedColColour	= "F38630";
+	public final static Integer	gridSIZE			= 7;
+	public final static Boolean	DEBUG				= false;
 
 	public static Integer		SIZE;
 	public static Integer		PAD;
-	public static final Integer	gridSIZE			= 7;
+	public static Texture[]		textures;
+	public static BitmapFont	font;
+	public static SpriteBatch	batch;
+
+	private static final String	emptyTileColour		= "E0E4CC";
+	private static final String	filledTileColour	= "69D2E7";
+	private static final String	selectedColColour	= "F38630";
 
 	@Override
 	public void create() {
+		super.setScreen(new MenuScreen(this));
+		loadAssets();
 
-		camera = new OrthographicCamera(VIRTUAL_WIDTH, VIRTUAL_HEIGHT);
-		camera.setToOrtho(true);
-		batch = new SpriteBatch();
-
-		font = new BitmapFont(Gdx.files.internal("basic.fnt"), true);
-		font.setColor(Color.BLACK);
-		font.setScale(4);
-
-		setupTextures();
-
-		boardManager = new BoardManager();
-		board = boardManager.getBoard("1");
-		goal = new Board();
-
-		for (int y = 0; y < gridSIZE; y++) {
-			for (int x = 0; x < gridSIZE; x++) {
-				goal.grid[x][y] = board.grid[x][y];
-			}
-		}
-
-		board.shuffle(6);
-
-		input = new InputManager(board);
-		Gdx.input.setInputProcessor(input);
 		Gdx.input.setCatchBackKey(true);
 	}
 
 	@Override
 	public void dispose() {
-		batch.dispose();
 		for (int i = 0; i < textures.length; i++) {
 			textures[i].dispose();
 		}
@@ -76,24 +43,7 @@ public class slyd extends Game {
 
 	@Override
 	public void render() {
-		Gdx.gl.glClearColor(1, 1, 1, 1);
-		Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
-
-		batch.setProjectionMatrix(camera.combined);
-		batch.begin();
-		for (int x = 0; x < gridSIZE; x++) {
-			for (int y = 0; y < gridSIZE; y++) {
-				batch.draw(textures[board.grid[x][y]], y * (SIZE + PAD) + PAD, x * (SIZE + PAD) + PAD, SIZE, SIZE);
-			}
-		}
-		if (input.touched)
-			batch.draw(textures[2], input.getCell().x * (SIZE + PAD) + PAD, input.getCell().y * (SIZE + PAD) + PAD,
-					SIZE, SIZE);
-
-		if (Arrays.deepEquals(goal.grid, board.grid)) {
-			font.draw(batch, "Hooray", Gdx.graphics.getWidth() / 2, Gdx.graphics.getHeight() / 3);
-		}
-		batch.end();
+		super.render();
 	}
 
 	@Override
@@ -102,14 +52,21 @@ public class slyd extends Game {
 		PAD = SIZE / (gridSIZE + 1);
 	}
 
-	private void setupTextures() {
+	private void loadAssets() {
+		// Initialise SpriteBatch
+		batch = new SpriteBatch();
+
+		// Setup Fonts
+		font = new BitmapFont(Gdx.files.internal("basic.fnt"), true);
+		font.setColor(Color.BLACK);
+		font.setScale(4);
+
+		// Setup Textures
 		ArrayList<String> colours = new ArrayList<String>();
 		colours.add(emptyTileColour);
 		colours.add(filledTileColour);
 		colours.add(selectedColColour);
-
 		textures = new Texture[colours.size()];
-
 		Pixmap pixmap = new Pixmap(1, 1, Format.RGBA8888);
 		for (int i = 0; i < colours.size(); i++) {
 			pixmap.setColor(Color.valueOf(colours.get(i)));

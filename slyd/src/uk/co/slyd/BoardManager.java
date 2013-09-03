@@ -24,8 +24,8 @@ public class BoardManager {
 		for (int i = 1; i < number; i++) {
 			Board board = new Board();
 			board.ID = String.valueOf(i);
-			for (int y = 0; y < slyd.gridSIZE; y++) {
-				for (int x = 0; x < slyd.gridSIZE; x++) {
+			for (int y = 0; y < Slyd.gridSIZE; y++) {
+				for (int x = 0; x < Slyd.gridSIZE; x++) {
 					board.grid[x][y] = random.nextInt(1);
 				}
 			}

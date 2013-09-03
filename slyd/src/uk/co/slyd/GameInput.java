@@ -5,7 +5,7 @@ import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.math.Vector2;
 
-public class InputManager implements InputProcessor {
+public class GameInput implements InputProcessor {
 
 	private final Board		board;
 	private final Vector2	cell		= new Vector2();
@@ -14,7 +14,7 @@ public class InputManager implements InputProcessor {
 
 	public Boolean			touched		= false;
 
-	public InputManager(Board board) {
+	public GameInput(Board board) {
 		this.board = board;
 	}
 
@@ -24,7 +24,7 @@ public class InputManager implements InputProcessor {
 
 	private Integer toCell(int pos) {
 		/* Takes a screen position in pixels and converts to cell coordinate */
-		int cell = (int) Math.ceil(pos / (slyd.SIZE + slyd.PAD));
+		int cell = (int) Math.ceil(pos / (Slyd.SIZE + Slyd.PAD));
 		return cell;
 	}
 
