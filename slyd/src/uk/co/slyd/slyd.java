@@ -22,9 +22,9 @@ public class Slyd extends Game {
 	public static BitmapFont	font;
 	public static SpriteBatch	batch;
 
-	private static final String	emptyTileColour		= "E0E4CC";
-	private static final String	filledTileColour	= "69D2E7";
-	private static final String	selectedColColour	= "F38630";
+	private static final String	emptyTileColour		= "DCF5F3";
+	private static final String	filledTileColour	= "4ECDC4";
+	private static final String	selectedColColour	= "FF6B6B";
 
 	@Override
 	public void create() {

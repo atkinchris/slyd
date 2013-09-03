@@ -10,17 +10,17 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 public class GameScreen implements Screen {
 
 	private final OrthographicCamera	camera;
-	private final GameInput			input;
+	private final GameInput				input;
 	private final BoardManager			boardManager;
 	private final Board					board;
 	private final Board					goal;
 
-	public GameScreen() {
+	public GameScreen(String boardID) {
 		camera = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 		camera.setToOrtho(true);
 
 		boardManager = new BoardManager();
-		board = boardManager.getBoard("1");
+		board = boardManager.getBoard(boardID);
 		goal = new Board();
 
 		for (int y = 0; y < Slyd.gridSIZE; y++) {

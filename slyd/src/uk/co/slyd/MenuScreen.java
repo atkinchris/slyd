@@ -3,23 +3,29 @@ package uk.co.slyd;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.Texture.TextureFilter;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 
 public class MenuScreen implements Screen {
 
-	private final Skin	skin;
-	private final Stage	stage;
-	private final Table	table;
-	private final Slyd	slyd;
+	private final Skin		skin;
+	private final Stage		stage;
+	private final Table		table;
+	private final Slyd		slyd;
+	private final Texture	logoTexture;
+	private final Integer	width	= 320;
+	private final Integer	height	= 480;
 
 	public MenuScreen(Slyd slyd) {
 		this.slyd = slyd;
-		stage = new Stage(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), false, Slyd.batch);
+		stage = new Stage(width, height, true);
 		skin = new Skin(Gdx.files.internal("uiskin.json"));
 		table = new Table(skin);
 		table.setFillParent(true);
@@ -27,53 +33,46 @@ public class MenuScreen implements Screen {
 			table.debug();
 		stage.addActor(table);
 
+		logoTexture = new Texture(Gdx.files.internal("logo.png"));
+		logoTexture.setFilter(TextureFilter.Linear, TextureFilter.Linear);
+
 	}
 
 	@Override
 	public void show() {
 		Gdx.input.setInputProcessor(stage);
 
-		table.add("slyd - a puzzle").spaceBottom(50);
+		Image logoImage = new Image(logoTexture);
+
+		table.top();
+
+		table.add(logoImage).maxSize(width * 0.9f);
 		table.row();
 
-		// register the button "new game"
-		TextButton newGameButton = new TextButton("New game", skin);
-		newGameButton.addListener(new InputListener() {
+		TextButton levelButton = new TextButton("Puzzle", skin);
+		levelButton.addListener(new InputListener() {
 
 			@Override
 			public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
 				super.touchUp(event, x, y, pointer, button);
-				slyd.setScreen(new GameScreen());
+				slyd.setScreen(new GameScreen("level-001"));
 				return true;
 			}
 		});
-		table.add(newGameButton).size(300, 60).uniform().spaceBottom(10);
+		table.add(levelButton).size(300, 60).uniform();
 		table.row();
 
-		// register the button "load game"
-		TextButton loadGameButton = new TextButton("Load game", skin);
-		loadGameButton.addListener(new InputListener() {
+		TextButton challengeButton = new TextButton("Challenge", skin);
+		challengeButton.addListener(new InputListener() {
 
 			@Override
-			public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+			public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
 				super.touchUp(event, x, y, pointer, button);
-				// game.setScreen(new LevelScreen(game));
+				slyd.setScreen(new GameScreen("challenge"));
+				return true;
 			}
 		});
-		table.add(loadGameButton).uniform().fill().spaceBottom(10);
-		table.row();
-
-		// register the button "options"
-		TextButton optionsButton = new TextButton("Options", skin);
-		optionsButton.addListener(new InputListener() {
-
-			@Override
-			public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
-				super.touchUp(event, x, y, pointer, button);
-				// game.setScreen(new LevelScreen(game));
-			}
-		});
-		table.add(optionsButton).uniform().fill();
+		table.add(challengeButton).size(300, 60).uniform();
 	}
 
 	@Override
