@@ -8,7 +8,38 @@ public class Board {
 	public Integer		par		= 6;
 	public Integer[][]	grid	= new Integer[slyd.gridSIZE][slyd.gridSIZE];
 
-	public boolean shiftColumn(Integer col, Boolean down) {
+	public void shift(Integer pos, Integer direction) {
+		if (direction == 3) { // Column Down
+			Integer temp = grid[slyd.gridSIZE - 1][pos];
+			for (int i = (slyd.gridSIZE - 1); i > 0; i--) {
+				grid[i][pos] = grid[i - 1][pos];
+			}
+			grid[0][pos] = temp;
+		}
+		if (direction == 1) { // Column Up
+			Integer temp = grid[0][pos];
+			for (int i = 0; i < (slyd.gridSIZE - 1); i++) {
+				grid[i][pos] = grid[i + 1][pos];
+			}
+			grid[slyd.gridSIZE - 1][pos] = temp;
+		}
+		if (direction == 2) { // Row Right
+			Integer temp = grid[pos][slyd.gridSIZE - 1];
+			for (int i = (slyd.gridSIZE - 1); i > 0; i--) {
+				grid[pos][i] = grid[pos][i - 1];
+			}
+			grid[pos][0] = temp;
+		}
+		if (direction == 4) { // Row Left
+			Integer temp = grid[pos][0];
+			for (int i = 0; i < (slyd.gridSIZE - 1); i++) {
+				grid[pos][i] = grid[pos][i + 1];
+			}
+			grid[pos][slyd.gridSIZE - 1] = temp;
+		}
+	}
+
+	public void shiftColumn(Integer col, Boolean down) {
 		if (down) {
 			Integer temp = grid[slyd.gridSIZE - 1][col];
 			for (int i = (slyd.gridSIZE - 1); i > 0; i--) {
@@ -22,10 +53,9 @@ public class Board {
 			}
 			grid[slyd.gridSIZE - 1][col] = temp;
 		}
-		return true;
 	}
 
-	public boolean shiftRow(Integer row, Boolean right) {
+	public void shiftRow(Integer row, Boolean right) {
 		if (right) {
 			Integer temp = grid[row][slyd.gridSIZE - 1];
 			for (int i = (slyd.gridSIZE - 1); i > 0; i--) {
@@ -39,7 +69,6 @@ public class Board {
 			}
 			grid[row][slyd.gridSIZE - 1] = temp;
 		}
-		return true;
 	}
 
 	private boolean emptyCol(Integer col) {

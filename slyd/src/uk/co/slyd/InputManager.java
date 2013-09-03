@@ -10,6 +10,7 @@ public class InputManager implements InputProcessor {
 	private final Board		board;
 	private final Vector2	cell		= new Vector2();
 	private Boolean			backPressed	= false;
+	private String			direction;
 
 	public Boolean			touched		= false;
 
@@ -70,23 +71,28 @@ public class InputManager implements InputProcessor {
 		touched = false;
 		cell.x = 0;
 		cell.y = 0;
+		direction = null;
 		return false;
 	}
 
 	@Override
 	public boolean touchDragged(int screenX, int screenY, int pointer) {
-		if (cell.y - toCell(screenY) == 1) {
+		if (cell.y - toCell(screenY) == 1 && direction != "x") {
 			board.shiftColumn((int) cell.x, false);
 			cell.y--;
-		} else if (cell.y - toCell(screenY) == -1) {
+			direction = "y";
+		} else if (cell.y - toCell(screenY) == -1 && direction != "x") {
 			board.shiftColumn((int) cell.x, true);
 			cell.y++;
-		} else if (cell.x - toCell(screenX) == 1) {
+			direction = "y";
+		} else if (cell.x - toCell(screenX) == 1 && direction != "y") {
 			board.shiftRow((int) cell.y, false);
 			cell.x--;
-		} else if (cell.x - toCell(screenX) == -1) {
+			direction = "x";
+		} else if (cell.x - toCell(screenX) == -1 && direction != "y") {
 			board.shiftRow((int) cell.y, true);
 			cell.x++;
+			direction = "x";
 		}
 		return false;
 	}
