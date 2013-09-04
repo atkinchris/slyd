@@ -24,7 +24,7 @@ public class GameInput implements InputProcessor {
 
 	private Integer toCell(int pos) {
 		/* Takes a screen position in pixels and converts to cell coordinate */
-		int cell = (int) Math.ceil(pos / (Slyd.SIZE + Slyd.PAD));
+		int cell = (int) Math.ceil(pos / Slyd.SIZE);
 		return cell;
 	}
 

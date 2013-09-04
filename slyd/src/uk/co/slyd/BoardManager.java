@@ -38,6 +38,8 @@ public class BoardManager {
 		FileHandle boardsDataFile = Gdx.files.local("boards.dat");
 		Json json = new Json();
 		String boardsDataText = json.prettyPrint(boards);
+		boardsDataText = boardsDataText.replaceAll("\n\t\t\t", "");
+		boardsDataText = boardsDataText.replaceAll("\n\t\t]", "]");
 		boardsDataFile.writeString(boardsDataText, false);
 	}
 

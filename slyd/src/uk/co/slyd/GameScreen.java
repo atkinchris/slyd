@@ -6,20 +6,24 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
 
 public class GameScreen implements Screen {
 
+	private final Stage					stage;
 	private final OrthographicCamera	camera;
 	private final GameInput				input;
 	private final BoardManager			boardManager;
 	private final Board					board;
 	private final Board					goal;
 
-	private Integer						offset;
-
 	public GameScreen(String boardID) {
 		camera = new OrthographicCamera();
 		camera.setToOrtho(true);
+
+		stage = new Stage();
+		stage.setCamera(camera);
 
 		boardManager = new BoardManager();
 		board = boardManager.getBoard(boardID);
@@ -46,24 +50,27 @@ public class GameScreen implements Screen {
 		Slyd.batch.begin();
 		for (int x = 0; x < Slyd.gridSIZE; x++) {
 			for (int y = 0; y < Slyd.gridSIZE; y++) {
-				Slyd.batch.draw(Slyd.textures[board.grid[x][y]], y * (Slyd.SIZE + Slyd.PAD) + Slyd.PAD, x
-						* (Slyd.SIZE + Slyd.PAD) + Slyd.PAD, Slyd.SIZE, Slyd.SIZE);
+				Slyd.batch.draw(Slyd.textures[board.grid[x][y]], x * Slyd.SIZE, y * Slyd.SIZE, Slyd.SIZE, Slyd.SIZE);
 			}
 		}
 		if (input.touched)
-			Slyd.batch.draw(Slyd.textures[2], input.getCell().x * (Slyd.SIZE + Slyd.PAD) + Slyd.PAD, input.getCell().y
-					* (Slyd.SIZE + Slyd.PAD) + Slyd.PAD, Slyd.SIZE, Slyd.SIZE);
+			Slyd.batch.draw(Slyd.textures[2], input.getCell().x * Slyd.SIZE, input.getCell().y * Slyd.SIZE, Slyd.SIZE,
+					Slyd.SIZE);
 
 		if (Arrays.deepEquals(goal.grid, board.grid)) {
 			Slyd.font.draw(Slyd.batch, "Hooray", Gdx.graphics.getWidth() / 2, Gdx.graphics.getHeight() / 3);
 		}
 
 		Slyd.batch.end();
+
+		stage.draw();
+		Table.drawDebug(stage);
+
 	}
 
 	@Override
 	public void resize(int width, int height) {
-		// TODO Auto-generated method stub
+		stage.setViewport(width, height, true);
 	}
 
 	@Override

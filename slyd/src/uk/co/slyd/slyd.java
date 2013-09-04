@@ -13,11 +13,10 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class Slyd extends Game {
 
-	public final static Integer	gridSIZE			= 7;
-	public final static Boolean	DEBUG				= false;
+	public final static int		gridSIZE			= 7;
+	public final static boolean	DEBUG				= false;
 
-	public static Integer		SIZE;
-	public static Integer		PAD;
+	public static int			SIZE;
 	public static Texture[]		textures;
 	public static BitmapFont	font;
 	public static SpriteBatch	batch;
@@ -28,7 +27,8 @@ public class Slyd extends Game {
 
 	@Override
 	public void create() {
-		super.setScreen(new MenuScreen(this));
+		// super.setScreen(new MenuScreen(this));
+		super.setScreen(new GameScreen("level001"));
 		loadAssets();
 
 		Gdx.input.setCatchBackKey(true);
@@ -48,13 +48,13 @@ public class Slyd extends Game {
 
 	@Override
 	public void resize(int width, int height) {
-		SIZE = width / (gridSIZE + 1);
-		PAD = SIZE / (gridSIZE + 1);
+		SIZE = width / gridSIZE;
 	}
 
 	private void loadAssets() {
 		// Initialise SpriteBatch
 		batch = new SpriteBatch();
+		batch.disableBlending();
 
 		// Setup Fonts
 		font = new BitmapFont(Gdx.files.internal("basic.fnt"), true);
@@ -67,10 +67,12 @@ public class Slyd extends Game {
 		colours.add(filledTileColour);
 		colours.add(selectedColColour);
 		textures = new Texture[colours.size()];
-		Pixmap pixmap = new Pixmap(1, 1, Format.RGBA8888);
+		Pixmap pixmap = new Pixmap(16, 16, Format.RGBA8888);
 		for (int i = 0; i < colours.size(); i++) {
-			pixmap.setColor(Color.valueOf(colours.get(i)));
+			pixmap.setColor(1f, 1f, 1f, 0f);
 			pixmap.fill();
+			pixmap.setColor(Color.valueOf(colours.get(i)));
+			pixmap.fillRectangle(2, 2, 14, 14);
 			textures[i] = new Texture(pixmap);
 		}
 		pixmap.dispose();
