@@ -13,10 +13,10 @@ public class BoardManager {
 
 	public BoardManager() {
 		boards = new HashMap<String, Board>();
-		if (Slyd.DEBUG) {
-			createDemoBoards(4);
-			writeBoards();
-		}
+		// if (Slyd.DEBUG) {
+		createDemoBoards(4);
+		writeBoards();
+		// }
 		readBoards();
 	}
 
@@ -24,10 +24,10 @@ public class BoardManager {
 		Random random = new Random();
 		for (int i = 0; i < number; i++) {
 			Board board = new Board();
-			board.ID = "level-00" + String.valueOf(i);
+			board.ID = "level00" + String.valueOf(i);
 			for (int y = 0; y < Slyd.gridSIZE; y++) {
 				for (int x = 0; x < Slyd.gridSIZE; x++) {
-					board.grid[x][y] = random.nextInt(1);
+					board.grid[x][y] = random.nextInt(2);
 				}
 			}
 			boards.put(board.ID, board);
@@ -37,18 +37,16 @@ public class BoardManager {
 	private void writeBoards() {
 		FileHandle boardsDataFile = Gdx.files.local("boards.dat");
 		Json json = new Json();
-		String boardsDataText = json.toJson(boards);
+		String boardsDataText = json.prettyPrint(boards);
 		boardsDataFile.writeString(boardsDataText, false);
 	}
 
 	@SuppressWarnings("unchecked")
 	private void readBoards() {
-		Gdx.app.log("Board", "Reading boards...");
 		FileHandle boardsDataFile = Gdx.files.internal("boards.dat");
 		Json json = new Json();
 		String boardsDataText = boardsDataFile.readString();
 		boards = json.fromJson(HashMap.class, boardsDataText);
-		Gdx.app.log("Board", "Reading boards complete.");
 	}
 
 	public Board getBoard(String ID) {

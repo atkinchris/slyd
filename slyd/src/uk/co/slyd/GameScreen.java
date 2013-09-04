@@ -15,8 +15,10 @@ public class GameScreen implements Screen {
 	private final Board					board;
 	private final Board					goal;
 
+	private Integer						offset;
+
 	public GameScreen(String boardID) {
-		camera = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+		camera = new OrthographicCamera();
 		camera.setToOrtho(true);
 
 		boardManager = new BoardManager();
@@ -55,13 +57,13 @@ public class GameScreen implements Screen {
 		if (Arrays.deepEquals(goal.grid, board.grid)) {
 			Slyd.font.draw(Slyd.batch, "Hooray", Gdx.graphics.getWidth() / 2, Gdx.graphics.getHeight() / 3);
 		}
+
 		Slyd.batch.end();
 	}
 
 	@Override
 	public void resize(int width, int height) {
 		// TODO Auto-generated method stub
-
 	}
 
 	@Override
