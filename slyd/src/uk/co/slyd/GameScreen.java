@@ -14,19 +14,17 @@ public class GameScreen implements Screen {
 	private final Stage					stage;
 	private final OrthographicCamera	camera;
 	private final GameInput				input;
-	private final BoardManager			boardManager;
 	private final Board					board;
 	private final Board					goal;
 
-	public GameScreen(String boardID) {
+	public GameScreen(Board board) {
 		camera = new OrthographicCamera();
 		camera.setToOrtho(true);
 
 		stage = new Stage();
 		stage.setCamera(camera);
 
-		boardManager = new BoardManager();
-		board = boardManager.getBoard(boardID);
+		this.board = board;
 		goal = new Board();
 
 		for (int y = 0; y < Slyd.gridSIZE; y++) {
@@ -50,7 +48,7 @@ public class GameScreen implements Screen {
 		Slyd.batch.begin();
 		for (int x = 0; x < Slyd.gridSIZE; x++) {
 			for (int y = 0; y < Slyd.gridSIZE; y++) {
-				Slyd.batch.draw(Slyd.textures[board.grid[x][y]], x * Slyd.SIZE, y * Slyd.SIZE, Slyd.SIZE, Slyd.SIZE);
+				Slyd.batch.draw(Slyd.textures[board.grid[x][y]], y * Slyd.SIZE, x * Slyd.SIZE, Slyd.SIZE, Slyd.SIZE);
 			}
 		}
 		if (input.touched)

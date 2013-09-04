@@ -55,7 +55,7 @@ public class MenuScreen implements Screen {
 			@Override
 			public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
 				super.touchDown(event, x, y, pointer, button);
-				slyd.setScreen(new GameScreen("level001"));
+				slyd.setScreen(new GameScreen(BoardManager.getBoard("level001")));
 				return true;
 			}
 		});
@@ -68,7 +68,7 @@ public class MenuScreen implements Screen {
 			@Override
 			public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
 				super.touchDown(event, x, y, pointer, button);
-				slyd.setScreen(new GameScreen("challenge"));
+				slyd.setScreen(new GameScreen(BoardManager.getBoard("challenge")));
 				return true;
 			}
 		});

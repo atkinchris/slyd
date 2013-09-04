@@ -9,18 +9,9 @@ import com.badlogic.gdx.utils.Json;
 
 public class BoardManager {
 
-	private HashMap<String, Board>	boards;
+	private static HashMap<String, Board>	boards;
 
-	public BoardManager() {
-		boards = new HashMap<String, Board>();
-		// if (Slyd.DEBUG) {
-		createDemoBoards(4);
-		writeBoards();
-		// }
-		readBoards();
-	}
-
-	private void createDemoBoards(Integer number) {
+	public static void createDemoBoards(Integer number) {
 		Random random = new Random();
 		for (int i = 0; i < number; i++) {
 			Board board = new Board();
@@ -34,7 +25,7 @@ public class BoardManager {
 		}
 	}
 
-	private void writeBoards() {
+	public static void writeBoards() {
 		FileHandle boardsDataFile = Gdx.files.local("boards.dat");
 		Json json = new Json();
 		String boardsDataText = json.prettyPrint(boards);
@@ -44,14 +35,14 @@ public class BoardManager {
 	}
 
 	@SuppressWarnings("unchecked")
-	private void readBoards() {
+	public static void readBoards() {
 		FileHandle boardsDataFile = Gdx.files.internal("boards.dat");
 		Json json = new Json();
 		String boardsDataText = boardsDataFile.readString();
 		boards = json.fromJson(HashMap.class, boardsDataText);
 	}
 
-	public Board getBoard(String ID) {
+	public static Board getBoard(String ID) {
 		Board board = boards.get(ID);
 		return board;
 	}

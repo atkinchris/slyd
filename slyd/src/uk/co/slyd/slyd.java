@@ -27,8 +27,7 @@ public class Slyd extends Game {
 
 	@Override
 	public void create() {
-		// super.setScreen(new MenuScreen(this));
-		super.setScreen(new GameScreen("level001"));
+		super.setScreen(new MenuScreen(this));
 		loadAssets();
 
 		Gdx.input.setCatchBackKey(true);
@@ -52,6 +51,9 @@ public class Slyd extends Game {
 	}
 
 	private void loadAssets() {
+		// Load Boards
+		BoardManager.readBoards();
+
 		// Initialise SpriteBatch
 		batch = new SpriteBatch();
 		batch.disableBlending();
