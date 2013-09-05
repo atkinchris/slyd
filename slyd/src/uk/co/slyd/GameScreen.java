@@ -4,7 +4,6 @@ import java.util.Arrays;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 
@@ -14,8 +13,13 @@ public class GameScreen implements Screen {
 	private final GameInput	input;
 	private final Board		board;
 	private final Board		goal;
+	private final Slyd		slyd;
+
+	public Boolean			won	= false;
 
 	public GameScreen(Slyd slyd) {
+		this.slyd = slyd;
+
 		stage = new Stage();
 		stage.setCamera(Slyd.camera);
 
@@ -35,8 +39,8 @@ public class GameScreen implements Screen {
 
 	@Override
 	public void render(float delta) {
-		Gdx.gl.glClearColor(1, 1, 1, 1);
-		Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
+		stage.draw();
+		Table.drawDebug(stage);
 
 		Slyd.batch.begin();
 		for (int x = 0; x < Slyd.gridSIZE; x++) {
@@ -45,15 +49,14 @@ public class GameScreen implements Screen {
 			}
 		}
 
-		if (Arrays.deepEquals(goal.grid, board.grid)) {
-			Slyd.font.draw(Slyd.batch, "Hooray", Gdx.graphics.getWidth() / 2, Gdx.graphics.getHeight() / 3);
+		Slyd.font.draw(Slyd.batch, "Moves " + input.moves.toString(), Gdx.graphics.getWidth() / 2,
+				Gdx.graphics.getHeight() / 2);
+
+		if (Arrays.deepEquals(goal.grid, board.grid) && !Gdx.input.isTouched()) {
+			slyd.setScreen(new WinScreen(slyd, input.moves));
 		}
 
 		Slyd.batch.end();
-
-		stage.draw();
-		Table.drawDebug(stage);
-
 	}
 
 	@Override

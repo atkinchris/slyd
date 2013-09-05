@@ -4,6 +4,7 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Pixmap.Format;
@@ -41,6 +42,8 @@ public class Slyd extends Game {
 
 	@Override
 	public void render() {
+		Gdx.gl.glClearColor(1, 1, 1, 1);
+		Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
 		super.render();
 	}
 
@@ -65,7 +68,6 @@ public class Slyd extends Game {
 
 		// Initialise SpriteBatch
 		batch = new SpriteBatch();
-		batch.disableBlending();
 		batch.setProjectionMatrix(camera.combined);
 
 		// Load & setup fonts
