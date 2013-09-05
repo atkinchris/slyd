@@ -48,7 +48,8 @@ public class GameScreen implements Screen {
 		Slyd.batch.begin();
 		for (int x = 0; x < Slyd.gridSIZE; x++) {
 			for (int y = 0; y < Slyd.gridSIZE; y++) {
-				Slyd.batch.draw(Slyd.textures[board.grid[x][y]], y * Slyd.SIZE, x * Slyd.SIZE, Slyd.SIZE, Slyd.SIZE);
+				Slyd.batch.draw(Slyd.textures[board.grid[x][y]], y * Slyd.SIZE, x * Slyd.SIZE + 100f, Slyd.SIZE,
+						Slyd.SIZE);
 			}
 		}
 		if (input.touched)

@@ -15,7 +15,8 @@ public class BoardManager {
 		Random random = new Random();
 		for (int i = 0; i < number; i++) {
 			Board board = new Board();
-			board.ID = "level00" + String.valueOf(i);
+			board.ID = "level00" + String.valueOf(i + 1);
+			board.par = 6;
 			for (int y = 0; y < Slyd.gridSIZE; y++) {
 				for (int x = 0; x < Slyd.gridSIZE; x++) {
 					board.grid[x][y] = random.nextInt(2);
@@ -40,6 +41,10 @@ public class BoardManager {
 		Json json = new Json();
 		String boardsDataText = boardsDataFile.readString();
 		boards = json.fromJson(HashMap.class, boardsDataText);
+	}
+
+	public static void putBoard(Board board) {
+		boards.put(board.ID, board);
 	}
 
 	public static Board getBoard(String ID) {
