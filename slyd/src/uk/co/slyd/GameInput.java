@@ -1,18 +1,15 @@
 package uk.co.slyd;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.math.Vector2;
 
 public class GameInput implements InputProcessor {
 
 	private final Board		board;
-	private final Vector2	cell		= new Vector2();
-	private Boolean			backPressed	= false;
+	private final Vector2	cell	= new Vector2();
 	private String			direction;
 
-	public Boolean			touched		= false;
+	public Boolean			touched	= false;
 
 	public GameInput(Board board) {
 		this.board = board;
@@ -23,23 +20,13 @@ public class GameInput implements InputProcessor {
 	}
 
 	private Integer toCell(int pos) {
-		/* Takes a screen position in pixels and converts to cell coordinate */
 		int cell = (int) Math.ceil(pos / Slyd.SIZE);
 		return cell;
 	}
 
 	@Override
 	public boolean keyDown(int keycode) {
-		if (keycode == Keys.R)
-			board.shuffle(board.par);
-
-		// Dirty method till UI is added.
-		if (keycode == Keys.BACK && backPressed)
-			Gdx.app.exit();
-		if (keycode == Keys.BACK) {
-			board.shuffle(board.par);
-			backPressed = true;
-		}
+		// TODO Auto-generated method stub
 		return false;
 	}
 
@@ -57,9 +44,6 @@ public class GameInput implements InputProcessor {
 
 	@Override
 	public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-		// Dirty method till UI is added.
-		backPressed = false;
-
 		touched = true;
 		cell.x = toCell(screenX);
 		cell.y = toCell(screenY);

@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Pixmap.Format;
 import com.badlogic.gdx.graphics.Texture;
@@ -13,17 +14,19 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class Slyd extends Game {
 
-	public final static int		gridSIZE			= 7;
-	public final static boolean	DEBUG				= false;
+	public final static int				gridSIZE			= 7;
+	public final static boolean			DEBUG				= false;
 
-	public static int			SIZE;
-	public static Texture[]		textures;
-	public static BitmapFont	font;
-	public static SpriteBatch	batch;
+	public static int					SIZE;
+	public static Texture[]				textures;
+	public static BitmapFont			font;
+	public static SpriteBatch			batch;
+	public static Board					board;
+	public static OrthographicCamera	camera;
 
-	private static final String	emptyTileColour		= "DCF5F3";
-	private static final String	filledTileColour	= "4ECDC4";
-	private static final String	selectedColColour	= "FF6B6B";
+	private static final String			emptyTileColour		= "DCF5F3";
+	private static final String			filledTileColour	= "4ECDC4";
+	private static final String			selectedColColour	= "FF6B6B";
 
 	@Override
 	public void create() {
@@ -51,12 +54,17 @@ public class Slyd extends Game {
 	}
 
 	private void loadAssets() {
+		// Setup Camera
+		camera = new OrthographicCamera();
+		camera.setToOrtho(true);
+
 		// Load Boards
 		BoardManager.readBoards();
 
 		// Initialise SpriteBatch
 		batch = new SpriteBatch();
 		batch.disableBlending();
+		batch.setProjectionMatrix(camera.combined);
 
 		// Setup Fonts
 		font = new BitmapFont(Gdx.files.internal("basic.fnt"), true);
