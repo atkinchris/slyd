@@ -3,24 +3,17 @@ package uk.co.slyd;
 import java.util.Arrays;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Table;
 
-public class GameScreen implements Screen {
+public class GameScreen extends AbstractScreen {
 
-	private final Stage		stage;
 	private final GameInput	input;
 	private final Board		board;
 	private final Board		goal;
-	private final Slyd		slyd;
 
 	public Boolean			won	= false;
 
 	public GameScreen(Slyd slyd) {
-		this.slyd = slyd;
-
-		stage = new Stage();
+		super(slyd);
 		stage.setCamera(Slyd.camera);
 
 		this.board = Slyd.board;
@@ -33,14 +26,12 @@ public class GameScreen implements Screen {
 		}
 
 		board.shuffle(board.par);
-
 		input = new GameInput(board);
 	}
 
 	@Override
 	public void render(float delta) {
-		stage.draw();
-		Table.drawDebug(stage);
+		super.render(delta);
 
 		Slyd.batch.begin();
 		for (int x = 0; x < Slyd.gridSIZE; x++) {
@@ -49,48 +40,19 @@ public class GameScreen implements Screen {
 			}
 		}
 
-		Slyd.font.draw(Slyd.batch, "Moves " + input.moves.toString(), Gdx.graphics.getWidth() / 2,
+		Slyd.font.draw(Slyd.batch, "Moves " + board.moves.toString(), Gdx.graphics.getWidth() / 2,
 				Gdx.graphics.getHeight() / 2);
 
 		if (Arrays.deepEquals(goal.grid, board.grid) && !Gdx.input.isTouched()) {
-			slyd.setScreen(new WinScreen(slyd, input.moves));
+			slyd.setScreen(new WinScreen(slyd));
 		}
 
 		Slyd.batch.end();
 	}
 
 	@Override
-	public void resize(int width, int height) {
-		stage.setViewport(width, height, true);
-	}
-
-	@Override
 	public void show() {
+		super.show();
 		Gdx.input.setInputProcessor(input);
 	}
-
-	@Override
-	public void hide() {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void pause() {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void resume() {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void dispose() {
-		// TODO Auto-generated method stub
-
-	}
-
 }

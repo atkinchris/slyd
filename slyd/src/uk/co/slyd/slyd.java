@@ -27,10 +27,10 @@ public class Slyd extends Game {
 
 	@Override
 	public void create() {
-		super.setScreen(new MenuScreen(this));
 		loadAssets();
-
 		Gdx.input.setCatchBackKey(true);
+
+		super.setScreen(new MenuScreen(this));
 	}
 
 	@Override

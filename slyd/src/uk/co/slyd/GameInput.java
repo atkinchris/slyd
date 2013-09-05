@@ -10,9 +10,6 @@ public class GameInput implements InputProcessor {
 	private Boolean			dragged	= false;
 	private String			direction;
 
-	public Boolean			touched	= false;
-	public Integer			moves	= 0;
-
 	public GameInput(Board board) {
 		this.board = board;
 	}
@@ -46,7 +43,6 @@ public class GameInput implements InputProcessor {
 
 	@Override
 	public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-		touched = true;
 		cell.x = toCell(screenX);
 		cell.y = toCell(screenY);
 		return false;
@@ -54,12 +50,11 @@ public class GameInput implements InputProcessor {
 
 	@Override
 	public boolean touchUp(int screenX, int screenY, int pointer, int button) {
-		touched = false;
 		cell.x = 0;
 		cell.y = 0;
 		direction = null;
 		if (dragged)
-			moves++;
+			board.moves++;
 		dragged = false;
 		return false;
 	}

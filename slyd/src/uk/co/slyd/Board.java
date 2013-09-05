@@ -6,6 +6,7 @@ public class Board {
 
 	public String		ID;
 	public Integer		par		= 6;
+	public Integer		moves	= 0;
 	public Integer[][]	grid	= new Integer[Slyd.gridSIZE][Slyd.gridSIZE];
 
 	public void shift(Integer pos, Integer direction) {
