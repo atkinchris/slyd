@@ -38,7 +38,7 @@ public class MenuScreen extends AbstractScreen {
 				return true;
 			}
 		});
-		table.add(levelButton).size(300, 60).uniform();
+		table.add(levelButton).expandX();
 		table.row();
 
 		TextButton challengeButton = new TextButton("Challenge", skin);
@@ -52,6 +52,6 @@ public class MenuScreen extends AbstractScreen {
 				return true;
 			}
 		});
-		table.add(challengeButton).size(300, 60).uniform();
+		table.add(challengeButton).expandX();
 	}
 }

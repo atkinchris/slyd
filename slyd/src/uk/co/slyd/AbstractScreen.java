@@ -49,8 +49,7 @@ public class AbstractScreen implements Screen {
 
 	@Override
 	public void hide() {
-		// TODO Auto-generated method stub
-
+		dispose();
 	}
 
 	@Override
@@ -67,8 +66,8 @@ public class AbstractScreen implements Screen {
 
 	@Override
 	public void dispose() {
-		// TODO Auto-generated method stub
-
+		skin.dispose();
+		stage.dispose();
 	}
 
 }

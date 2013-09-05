@@ -40,8 +40,7 @@ public class GameScreen extends AbstractScreen {
 			}
 		}
 
-		Slyd.font.draw(Slyd.batch, "Moves " + board.moves.toString(), Gdx.graphics.getWidth() / 2,
-				Gdx.graphics.getHeight() / 2);
+		Slyd.font.draw(Slyd.batch, "Moves " + board.moves.toString(), 10, Slyd.SIZE * Slyd.gridSIZE + 10);
 
 		if (Arrays.deepEquals(goal.grid, board.grid) && !Gdx.input.isTouched()) {
 			slyd.setScreen(new WinScreen(slyd));
