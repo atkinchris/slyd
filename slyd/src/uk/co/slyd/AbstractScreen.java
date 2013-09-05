@@ -1,6 +1,7 @@
 package uk.co.slyd;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
@@ -30,6 +31,14 @@ public class AbstractScreen implements Screen {
 	public void render(float delta) {
 		if (delta > 0.1f)
 			delta = 0.0166f;
+
+		if (Gdx.input.isKeyPressed(Input.Keys.BACK)) {
+			if (isMenuScreen()) {
+				Gdx.app.exit();
+			} else {
+				slyd.setScreen(new MenuScreen(slyd));
+			}
+		}
 
 		stage.act(delta);
 		stage.draw();
@@ -68,6 +77,10 @@ public class AbstractScreen implements Screen {
 	public void dispose() {
 		skin.dispose();
 		stage.dispose();
+	}
+
+	protected boolean isMenuScreen() {
+		return false;
 	}
 
 }

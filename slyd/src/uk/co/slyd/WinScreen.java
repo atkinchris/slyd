@@ -4,8 +4,6 @@ import com.badlogic.gdx.Gdx;
 
 public class WinScreen extends AbstractScreen {
 
-	private final float	longpress	= 0;
-
 	public WinScreen(Slyd slyd) {
 		super(slyd);
 	}

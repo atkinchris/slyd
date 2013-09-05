@@ -54,4 +54,10 @@ public class MenuScreen extends AbstractScreen {
 		});
 		table.add(challengeButton).expandX();
 	}
+
+	@Override
+	protected boolean isMenuScreen() {
+		return true;
+	}
+
 }
