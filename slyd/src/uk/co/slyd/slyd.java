@@ -1,5 +1,9 @@
 package uk.co.slyd;
 
+import uk.co.slyd.models.Board;
+import uk.co.slyd.models.BoardManager;
+import uk.co.slyd.screens.MenuScreen;
+
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;

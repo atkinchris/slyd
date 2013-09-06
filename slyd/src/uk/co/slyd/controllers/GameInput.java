@@ -1,4 +1,7 @@
-package uk.co.slyd;
+package uk.co.slyd.controllers;
+
+import uk.co.slyd.Slyd;
+import uk.co.slyd.models.Board;
 
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.math.Vector2;

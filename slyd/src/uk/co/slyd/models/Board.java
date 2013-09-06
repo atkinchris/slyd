@@ -1,6 +1,8 @@
-package uk.co.slyd;
+package uk.co.slyd.models;
 
 import java.util.Random;
+
+import uk.co.slyd.Slyd;
 
 public class Board {
 

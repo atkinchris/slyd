@@ -1,6 +1,6 @@
 {
 level001: {
-	class: uk.co.slyd.Board,
+	class: uk.co.slyd.models.Board,
 	grid: [
 		[0,0,0,0,0,0,0],
 		[0,0,0,0,0,0,0],
@@ -13,7 +13,7 @@ level001: {
 	ID: level001
 },
 challenge: {
-	class: uk.co.slyd.Board,
+	class: uk.co.slyd.models.Board,
 	grid: [
 		[1,1,1,1,1,1,1],
 		[1,0,0,0,0,0,1],

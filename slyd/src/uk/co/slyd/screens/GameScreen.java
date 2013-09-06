@@ -1,6 +1,10 @@
-package uk.co.slyd;
+package uk.co.slyd.screens;
 
 import java.util.Arrays;
+
+import uk.co.slyd.Slyd;
+import uk.co.slyd.controllers.GameInput;
+import uk.co.slyd.models.Board;
 
 import com.badlogic.gdx.Gdx;
 

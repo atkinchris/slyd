@@ -1,4 +1,6 @@
-package uk.co.slyd;
+package uk.co.slyd.screens;
+
+import uk.co.slyd.Slyd;
 
 import com.badlogic.gdx.Gdx;
 

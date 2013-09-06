@@ -1,4 +1,7 @@
-package uk.co.slyd;
+package uk.co.slyd.screens;
+
+import uk.co.slyd.Slyd;
+import uk.co.slyd.models.BoardManager;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;

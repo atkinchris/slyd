@@ -1,7 +1,9 @@
-package uk.co.slyd;
+package uk.co.slyd.models;
 
 import java.util.HashMap;
 import java.util.Random;
+
+import uk.co.slyd.Slyd;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
