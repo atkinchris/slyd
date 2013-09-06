@@ -29,7 +29,7 @@ public class BoardManager {
 	}
 
 	public static void writeBoards() {
-		FileHandle boardsDataFile = Gdx.files.local("boards");
+		FileHandle boardsDataFile = Gdx.files.local("data/boards");
 		Json json = new Json();
 		String boardsDataText = json.prettyPrint(boards);
 		boardsDataText = boardsDataText.replaceAll("\n\t\t\t", "");
@@ -39,7 +39,7 @@ public class BoardManager {
 
 	@SuppressWarnings("unchecked")
 	public static void readBoards() {
-		FileHandle boardsDataFile = Gdx.files.internal("boards");
+		FileHandle boardsDataFile = Gdx.files.internal("data/boards");
 		Json json = new Json();
 		String boardsDataText = boardsDataFile.readString();
 		boards = json.fromJson(HashMap.class, boardsDataText);

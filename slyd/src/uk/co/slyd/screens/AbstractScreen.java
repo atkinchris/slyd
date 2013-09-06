@@ -21,9 +21,10 @@ public class AbstractScreen implements Screen {
 	public AbstractScreen(Slyd slyd) {
 		this.slyd = slyd;
 		stage = new Stage(width, height, true);
-		skin = new Skin(Gdx.files.internal("uiskin.json"));
+		skin = new Skin(Gdx.files.internal("skin/uiskin.json"));
 		table = new Table(skin);
 		table.setFillParent(true);
+		table.pad(10).defaults().expandX().space(4);
 		if (Slyd.DEBUG)
 			table.debug();
 		stage.addActor(table);
@@ -56,6 +57,7 @@ public class AbstractScreen implements Screen {
 	@Override
 	public void show() {
 		Gdx.input.setInputProcessor(stage);
+		stage.setCamera(Slyd.camera);
 	}
 
 	@Override

@@ -10,7 +10,8 @@ level001: {
 		[0,0,0,0,0,0,0],
 		[0,0,0,0,0,0,0]
 	],
-	ID: level001
+	ID: level001,
+	par: 3
 },
 challenge: {
 	class: uk.co.slyd.models.Board,
@@ -23,6 +24,7 @@ challenge: {
 		[1,0,0,0,0,0,1],
 		[1,1,1,1,1,1,1]
 	],
-	ID: challenge
+	ID: challenge,
+	par: 12
 }
 }

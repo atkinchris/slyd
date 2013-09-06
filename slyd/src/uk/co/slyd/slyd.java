@@ -65,7 +65,7 @@ public class Slyd extends Game {
 		BoardManager.readBoards();
 
 		// Load colours
-		FileHandle coloursDataFile = Gdx.files.internal("colours");
+		FileHandle coloursDataFile = Gdx.files.internal("data/colours");
 		Json json = new Json();
 		String coloursDataText = coloursDataFile.readString();
 		String[] colours = json.fromJson(String[].class, coloursDataText);
@@ -73,9 +73,10 @@ public class Slyd extends Game {
 		// Initialise SpriteBatch
 		batch = new SpriteBatch();
 		batch.setProjectionMatrix(camera.combined);
+		batch.enableBlending();
 
 		// Load & setup fonts
-		font = new BitmapFont(Gdx.files.internal("basic.fnt"), true);
+		font = new BitmapFont(Gdx.files.internal("skin/basic.fnt"), true);
 		font.setColor(Color.BLACK);
 		font.setScale(4);
 
