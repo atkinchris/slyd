@@ -31,7 +31,7 @@ public class MenuScreen extends AbstractScreen {
 
 		table.row();
 		TextButton levelButton = new TextButton("Puzzle", skin);
-		table.add(levelButton);
+		table.add(levelButton).width(260f);
 		levelButton.addListener(new ClickListener() {
 
 			@Override
@@ -43,7 +43,7 @@ public class MenuScreen extends AbstractScreen {
 
 		table.row();
 		TextButton challengeButton = new TextButton("Challenge", skin);
-		table.add(challengeButton);
+		table.add(challengeButton).width(260f);
 		challengeButton.addListener(new ClickListener() {
 
 			@Override

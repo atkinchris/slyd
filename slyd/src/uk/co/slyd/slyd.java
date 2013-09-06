@@ -20,7 +20,7 @@ import com.badlogic.gdx.utils.Json;
 public class Slyd extends Game {
 
 	public final static int				gridSIZE	= 7;
-	public final static boolean			DEBUG		= true;
+	public final static boolean			DEBUG		= false;
 
 	public static int					SIZE;
 	public static Texture[]				textures;
@@ -77,7 +77,7 @@ public class Slyd extends Game {
 		// Load & setup fonts
 		font = new BitmapFont(Gdx.files.internal("skin/basic.fnt"), true);
 		font.setColor(Color.BLACK);
-		font.setScale(4);
+		font.setScale(2);
 
 		// Setup textures
 		textures = new Texture[colours.length];
