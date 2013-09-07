@@ -2,7 +2,6 @@ package uk.co.slyd.models;
 
 import uk.co.slyd.Slyd;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
@@ -13,7 +12,8 @@ public class BoardActor extends Actor {
 	private final DragListener	input;
 	private String				direction;
 	private Vector2				touchPos;
-	private Vector2				deltaPos;
+	private final Vector2		deltaPos;
+	private int					last;
 
 	public BoardActor() {
 		input = new DragListener();
@@ -25,7 +25,7 @@ public class BoardActor extends Actor {
 	@Override
 	public void act(float delta) {
 		if (!input.isDragging()) {
-			direction = "";
+			direction = "u";
 			return;
 		}
 
@@ -33,22 +33,27 @@ public class BoardActor extends Actor {
 		touchPos.y = input.getTouchDownY();
 		touchPos = screenToLocalCoordinates(touchPos);
 
-		deltaPos.x = input.getDeltaX();
-		deltaPos.y = input.getDeltaY();
-		deltaPos = screenToLocalCoordinates(deltaPos);
+		deltaPos.x = input.getTouchDownX() - input.getDeltaX();
+		deltaPos.y = input.getTouchDownY() - input.getDeltaY();
 
-		Gdx.app.log("touch", touchPos.toString());
-		Gdx.app.log("delta", deltaPos.toString());
-
-		if (deltaPos.y % 1 == 0 && direction != "x") {
+		if (Math.abs(deltaPos.y) > Slyd.SIZE && direction != "x") {
 			direction = "y";
-			Slyd.board.shiftColumn(toCell(touchPos.x), deltaPos.y > 0 ? true : false);
-			return;
+			touchPos.y = 0;
+			deltaPos.x = 0;
+		} else if (Math.abs(deltaPos.x) > Slyd.SIZE && direction != "y") {
+			direction = "x";
+			touchPos.x = 0;
+			deltaPos.y = 0;
 		}
 
-		if (deltaPos.x % 1 == 0 && direction != "y") {
-			direction = "x";
-			Slyd.board.shiftColumn(toCell(touchPos.y), deltaPos.x > 0 ? true : false);
+		if (toCell(deltaPos.y) > 0 && direction == "y" && toCell(deltaPos.y) != last) {
+			last = toCell(deltaPos.y);
+			Slyd.board.shiftColumn(toCell(touchPos.x) - 1, deltaPos.y > 0 ? true : false);
+		}
+
+		if (toCell(deltaPos.x) > 0 && direction == "x" && toCell(deltaPos.x) != last) {
+			last = toCell(deltaPos.x);
+			Slyd.board.shiftRow(toCell(touchPos.y) - 1, deltaPos.x > 0 ? true : false);
 		}
 	}
 
@@ -60,10 +65,12 @@ public class BoardActor extends Actor {
 						Slyd.SIZE, Slyd.SIZE);
 			}
 		}
+		Slyd.font.draw(batch, direction + ":" + toCell(touchPos.x) + "," + toCell(touchPos.y) + ":"
+				+ toCell(deltaPos.x) + "," + toCell(deltaPos.y), getX(), getY());
 	}
 
-	private Integer toCell(float x) {
-		int cell = (int) Math.ceil(x / Slyd.SIZE);
+	private int toCell(float x) {
+		int cell = (int) Math.ceil(Math.abs(x) / Slyd.SIZE);
 		return cell;
 	}
 }
