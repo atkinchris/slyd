@@ -24,6 +24,7 @@ public class AbstractScreen implements Screen {
 		skin = new Skin(Gdx.files.internal("skin/uiskin.json"));
 		table = new Table(skin);
 		table.setFillParent(true);
+		table.top();
 		table.pad(10).defaults().expandX().space(4);
 		if (Slyd.DEBUG)
 			table.debug();
@@ -57,6 +58,12 @@ public class AbstractScreen implements Screen {
 	@Override
 	public void show() {
 		Gdx.input.setInputProcessor(stage);
+
+		if (isGameScreen())
+			Slyd.camera.setToOrtho(true);
+		else
+			Slyd.camera.setToOrtho(false);
+
 		stage.setCamera(Slyd.camera);
 	}
 
@@ -84,6 +91,10 @@ public class AbstractScreen implements Screen {
 	}
 
 	protected boolean isMenuScreen() {
+		return false;
+	}
+
+	protected boolean isGameScreen() {
 		return false;
 	}
 

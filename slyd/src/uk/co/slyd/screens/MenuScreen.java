@@ -1,7 +1,6 @@
 package uk.co.slyd.screens;
 
 import uk.co.slyd.Slyd;
-import uk.co.slyd.models.BoardManager;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
@@ -23,33 +22,20 @@ public class MenuScreen extends AbstractScreen {
 
 	@Override
 	public void show() {
-		Gdx.input.setInputProcessor(stage);
+		super.show();
 
 		Image logoImage = new Image(logoTexture);
 
 		table.add(logoImage).maxSize(width * 0.9f);
 
 		table.row();
-		TextButton levelButton = new TextButton("Puzzle", skin);
+		TextButton levelButton = new TextButton("Start Game", skin);
 		table.add(levelButton).width(260f);
 		levelButton.addListener(new ClickListener() {
 
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
-				Slyd.board = BoardManager.getBoard("level001");
-				slyd.setScreen(new GameScreen(slyd));
-			}
-		});
-
-		table.row();
-		TextButton challengeButton = new TextButton("Challenge", skin);
-		table.add(challengeButton).width(260f);
-		challengeButton.addListener(new ClickListener() {
-
-			@Override
-			public void clicked(InputEvent event, float x, float y) {
-				Slyd.board = BoardManager.getBoard("challenge");
-				slyd.setScreen(new GameScreen(slyd));
+				slyd.setScreen(new LevelScreen(slyd));
 			}
 		});
 	}

@@ -53,4 +53,8 @@ public class BoardManager {
 		Board board = boards.get(ID);
 		return board;
 	}
+
+	public static HashMap<String, Board> getBoards() {
+		return boards;
+	}
 }

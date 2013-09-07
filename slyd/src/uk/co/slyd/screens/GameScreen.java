@@ -19,7 +19,7 @@ public class GameScreen extends AbstractScreen {
 	public GameScreen(Slyd slyd) {
 		super(slyd);
 
-		this.board = Slyd.board;
+		board = Slyd.board;
 		goal = new Board();
 
 		for (int y = 0; y < Slyd.gridSIZE; y++)
@@ -32,8 +32,6 @@ public class GameScreen extends AbstractScreen {
 
 	@Override
 	public void render(float delta) {
-		super.render(delta);
-
 		Slyd.batch.begin();
 		for (int x = 0; x < Slyd.gridSIZE; x++)
 			for (int y = 0; y < Slyd.gridSIZE; y++)
@@ -51,5 +49,10 @@ public class GameScreen extends AbstractScreen {
 	public void show() {
 		super.show();
 		Gdx.input.setInputProcessor(input);
+	}
+
+	@Override
+	protected boolean isGameScreen() {
+		return true;
 	}
 }

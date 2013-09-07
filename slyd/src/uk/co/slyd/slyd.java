@@ -20,7 +20,7 @@ import com.badlogic.gdx.utils.Json;
 public class Slyd extends Game {
 
 	public final static int				gridSIZE	= 7;
-	public final static boolean			DEBUG		= false;
+	public final static boolean			DEBUG		= true;
 
 	public static int					SIZE;
 	public static Texture[]				textures;
@@ -59,7 +59,6 @@ public class Slyd extends Game {
 	private void loadAssets() {
 		// Setup camera
 		camera = new OrthographicCamera();
-		camera.setToOrtho(true);
 
 		// Load boards
 		BoardManager.readBoards();
