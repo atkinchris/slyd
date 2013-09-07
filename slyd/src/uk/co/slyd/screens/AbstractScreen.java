@@ -25,7 +25,6 @@ public class AbstractScreen implements Screen {
 		table = new Table(skin);
 		table.setFillParent(true);
 		table.top();
-		table.pad(10).defaults().expandX().space(4);
 		if (Slyd.DEBUG)
 			table.debug();
 		stage.addActor(table);
@@ -57,14 +56,8 @@ public class AbstractScreen implements Screen {
 
 	@Override
 	public void show() {
-		Gdx.input.setInputProcessor(stage);
-
-		// if (isGameScreen())
-		// Slyd.camera.setToOrtho(true);
-		// else
-		// Slyd.camera.setToOrtho(false);
-
 		stage.setCamera(Slyd.camera);
+		Gdx.input.setInputProcessor(stage);
 	}
 
 	@Override

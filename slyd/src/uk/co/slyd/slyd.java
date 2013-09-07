@@ -1,7 +1,7 @@
 package uk.co.slyd;
 
 import uk.co.slyd.models.Board;
-import uk.co.slyd.models.BoardManager;
+import uk.co.slyd.screens.LevelScreen;
 import uk.co.slyd.screens.MenuScreen;
 
 import com.badlogic.gdx.Game;
@@ -31,9 +31,14 @@ public class Slyd extends Game {
 
 	@Override
 	public void create() {
-		loadAssets();
 		Gdx.input.setCatchBackKey(true);
-		setScreen(new MenuScreen(this));
+		loadAssets();
+
+		if (DEBUG) {
+			setScreen(new LevelScreen(this));
+		} else {
+			setScreen(new MenuScreen(this));
+		}
 	}
 
 	@Override
@@ -85,7 +90,8 @@ public class Slyd extends Game {
 			pixmap.setColor(1f, 1f, 1f, 0f);
 			pixmap.fill();
 			pixmap.setColor(Color.valueOf(colours[i]));
-			pixmap.fillRectangle(2, 2, 14, 14);
+			pixmap.fill();
+			// pixmap.fillRectangle(2, 2, 14, 14);
 			textures[i] = new Texture(pixmap);
 		}
 		pixmap.dispose();

@@ -7,7 +7,6 @@ import uk.co.slyd.models.Board;
 import uk.co.slyd.models.BoardActor;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 
 public class GameScreen extends AbstractScreen {
 
@@ -21,12 +20,13 @@ public class GameScreen extends AbstractScreen {
 			for (int x = 0; x < Slyd.gridSIZE; x++)
 				goal.grid[x][y] = Slyd.board.grid[x][y];
 
-		BoardActor boardActor = new BoardActor();
-		table.add(boardActor);
-		table.row();
+		Slyd.board.shuffle();
 
-		TextButton levelButton = new TextButton("Moves " + Slyd.board.moves.toString(), skin);
-		table.add(levelButton).width(260f);
+		BoardActor boardActor = new BoardActor();
+		boardActor.size(Slyd.gridSIZE * Slyd.SIZE);
+
+		table.add(boardActor);
+
 	}
 
 	@Override

@@ -1,8 +1,8 @@
 package uk.co.slyd.screens;
 
+import uk.co.slyd.BoardManager;
 import uk.co.slyd.Slyd;
 import uk.co.slyd.models.Board;
-import uk.co.slyd.models.BoardManager;
 
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
