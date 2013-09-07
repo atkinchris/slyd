@@ -59,10 +59,10 @@ public class AbstractScreen implements Screen {
 	public void show() {
 		Gdx.input.setInputProcessor(stage);
 
-		if (isGameScreen())
-			Slyd.camera.setToOrtho(true);
-		else
-			Slyd.camera.setToOrtho(false);
+		// if (isGameScreen())
+		// Slyd.camera.setToOrtho(true);
+		// else
+		// Slyd.camera.setToOrtho(false);
 
 		stage.setCamera(Slyd.camera);
 	}

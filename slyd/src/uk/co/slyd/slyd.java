@@ -33,8 +33,7 @@ public class Slyd extends Game {
 	public void create() {
 		loadAssets();
 		Gdx.input.setCatchBackKey(true);
-
-		super.setScreen(new MenuScreen(this));
+		setScreen(new MenuScreen(this));
 	}
 
 	@Override
@@ -59,6 +58,7 @@ public class Slyd extends Game {
 	private void loadAssets() {
 		// Setup camera
 		camera = new OrthographicCamera();
+		Slyd.camera.setToOrtho(false);
 
 		// Load boards
 		BoardManager.readBoards();

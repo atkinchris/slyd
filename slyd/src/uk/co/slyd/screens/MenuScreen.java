@@ -41,7 +41,7 @@ public class MenuScreen extends AbstractScreen {
 	}
 
 	@Override
-	protected boolean isMenuScreen() {
+	public boolean isMenuScreen() {
 		return true;
 	}
 
