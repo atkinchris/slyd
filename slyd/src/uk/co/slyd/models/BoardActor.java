@@ -26,6 +26,7 @@ public class BoardActor extends Actor {
 	public void act(float delta) {
 		if (!input.isDragging()) {
 			direction = "u";
+			last = 0;
 			return;
 		}
 
@@ -61,7 +62,7 @@ public class BoardActor extends Actor {
 	public void draw(SpriteBatch batch, float parentAlpha) {
 		for (int x = 0; x < Slyd.gridSIZE; x++) {
 			for (int y = 0; y < Slyd.gridSIZE; y++) {
-				batch.draw(Slyd.textures[Slyd.board.grid[x][y]], getX() + x * Slyd.SIZE, getY() + y * Slyd.SIZE,
+				batch.draw(Slyd.textures[Slyd.board.grid[x][y]], getX() + y * Slyd.SIZE, getY() + (x * Slyd.SIZE),
 						Slyd.SIZE, Slyd.SIZE);
 			}
 		}
